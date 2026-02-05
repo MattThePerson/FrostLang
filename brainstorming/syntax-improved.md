@@ -13,9 +13,10 @@ uind main() {
     !p "Hello World!\n";
     !pl "Append new line";
     !pf "Int: %d, float: %.1f, string: %s\n", 13, 5.9, "message here";
+    io.printf("Int: %d, float: %.1f, string: %s\n", 13, 5.9, "message here");
 
     // replaces lines with this:
-    io.print
+    io.print("Hello World!\n");
 
     return 0;
 }
@@ -30,8 +31,8 @@ uind main() {
 uind main() {
 
     // 
-    CPU.get_reg_val();
-    CPU.
+    ui64: rax = CPU.get_reg_val("rax");
+    CPU.mov("rdi", 13);
 
     return 0;
 }

@@ -10,7 +10,9 @@
  */
 std::vector<std::string> tokenize(std::istream &stream) {
 
-    std::string ignore_chars = "\n\0\r\t";
+    std::string escape_sequences{'\0', '\n', '\r', '\t',
+                                 '\b', '\f', '\v', '\a'};
+    std::string escape_sequence_chars = "0nrtbfva";
     std::string single_token_chars = "<>(){}=[];:,.\"+-/*";
     std::unordered_set<std::string> type_tokens = {"uind", "ind"};
 
@@ -44,9 +46,15 @@ std::vector<std::string> tokenize(std::istream &stream) {
                 continue;
             } else if (special_char_flag) {
                 special_char_flag = false;
-                if (ch != '"' && ch != '\\') {
-                    buffer.push_back('\\');
+                if (ch == '"' || ch == '\\' || ch == '\'' || ch == '?') {
+                    buffer.push_back(ch);
                 }
+                if (escape_sequence_chars.find(ch) != std::string::npos) {
+                    token_vect.push_back(buffer);
+                    buffer.clear();
+                    token_vect.push_back(std::string{'\\', ch});
+                }
+                continue;
             }
             buffer.push_back(ch);
             continue;
@@ -63,7 +71,7 @@ std::vector<std::string> tokenize(std::istream &stream) {
         }
 
         // ignore char
-        if (ignore_chars.find(ch) != std::string::npos) {
+        if (escape_sequences.find(ch) != std::string::npos) {
             continue;
         }
 
