@@ -1,0 +1,7 @@
+uind main() {
+    i: number = 69;
+    f: float=3.1415962;
+    ch[]: msg = "Another \"string\" here \\!";
+    io.printf("Hello there!\nHere, have a number: %d\nAnd heres a message: %s\n", number, msg);
+    return number;
+}
